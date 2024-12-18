@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Window
+    x:Class="TreeViewItemDropIssue.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TreeViewItemDropIssue"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="TreeViewItemDropIssue">
+    <StackPanel
+        Orientation="Horizontal"
+        HorizontalAlignment="Left"
+        VerticalAlignment="Top"
+        Width="500"
+        Height="500"
+        Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid
+            CanDrag="True"
+            DragStarting="Grid_DragStarting"
+            Height="130"
+            Width="130"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Background="LightPink"
+            BorderThickness="1"
+            BorderBrush="HotPink">
+            <TextBlock
+                Text="Drag Me!"
+                FontSize="22"
+                FontWeight="Bold"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"/>
+        </Grid>
+
+        <Grid
+            VerticalAlignment="Top"
+            Margin="20, 0, 0, 0"
+            BorderThickness="1"
+            BorderBrush="{ThemeResource SystemControlForegroundBaseMediumLowBrush}">
+            <Grid.Resources>
+                <local:TreeViewTemplateSelector x:Key="TreeViewTemplateSelector">
+                    <local:TreeViewTemplateSelector.GroupTemplate>
+                        <DataTemplate x:DataType="local:TreeViewTestGroupItem">
+                            <TreeViewItem
+                                Content="{x:Bind Title}"
+                                ItemsSource="{x:Bind MembersItemSource}"
+                                AllowDrop="False"
+                                CanDrag="False"
+                                FontWeight="SemiBold"/>
+                        </DataTemplate>
+                    </local:TreeViewTemplateSelector.GroupTemplate>
+
+                    <local:TreeViewTemplateSelector.MemberTemplate>
+                        <DataTemplate x:DataType="local:TreeViewTestMemberItem">
+                            <TreeViewItem
+                                Content="{x:Bind Name}"
+                                AllowDrop="True"
+                                CanDrag="False"
+                                DragOver="TreeViewItem_DragOver"
+                                DragLeave="TreeViewItem_DragLeave"
+                                Drop="TreeViewItem_Drop"
+                                Height="50"
+                                Width="300"/>
+                        </DataTemplate>
+                    </local:TreeViewTemplateSelector.MemberTemplate>
+                </local:TreeViewTemplateSelector>
+            </Grid.Resources>
+
+            <TreeView
+                ItemTemplateSelector="{StaticResource TreeViewTemplateSelector}"
+                ItemsSource="{x:Bind GroupsItemSource}"
+                SelectionMode="None"
+                AllowDrop="False"
+                CanDragItems="False"
+                CanReorderItems="False"
+                Width="200">
+                <TreeView.ItemContainerStyle>
+                    <Style TargetType="TreeViewItem">
+                        <Setter Property="IsExpanded" Value="True"/>
+                    </Style>
+                </TreeView.ItemContainerStyle>
+            </TreeView>
+        </Grid>
+    </StackPanel>
+</Window>

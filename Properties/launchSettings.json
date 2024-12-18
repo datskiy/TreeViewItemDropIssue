@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "TreeViewItemDropIssue (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "TreeViewItemDropIssue (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
